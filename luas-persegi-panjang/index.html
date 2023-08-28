@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menghitung luas Persegi Panjang</title>
+</head>
+<body>
+  <script>
+    function hitungLuasPersegiPanjang(panjang, lebar) {
+      return panjang * lebar;
+    }
+
+    let panjang = parseInt(prompt("masukkan panjang"))
+    let lebar = parseInt(prompt("masukkan lebar"))
+    document.write("panjang:", panjang, " lebar:", lebar)
+    document.write("<br>luas = ")
+    document.write(hitungLuasPersegiPanjang(panjang, lebar))
+  </script>
+
+  <br>
+  <a href="/index.html">back</a>
+  <button onclick="window.location.reload()">Again</button>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menghitung Gaji Bersih</title>
+  </head>
+  <body>
+    <script>
+          let statusMenikah = false;
+          let banyakAnak = 0;
+
+          const dataGajiPokok = [
+            2000000,
+            3000000,
+            5000000,
+          ];
+
+          function hitungPPN(gapok) {
+            // ppn 5% jika kurang dari 5jt
+            // ppn 10% jika lebih dari 5jt
+            if (gapok < 5000000) {
+              return gapok *  0.05
+            } else {
+              return gapok *  0.1
+            }
+          }
+
+          function hitungTunjanganNikah(jumlah) {
+            return jumlah * 0.1;
+          }
+
+          function hitungTunjanganAnak(gapok, jumlahAnak) {
+            return gapok * (0.2 * jumlahAnak);
+          }
+
+          function hitungGajiKotor(golongan, statusMenikah, banyakAnak) {
+            let gajiPokok = dataGajiPokok[golongan-1];
+            let tunjanganNikah=0;
+            let tunjanganAnak=0;
+            if (statusMenikah) {
+              // tunjangan menikah sebesar 10%
+              tunjanganNikah = gajiPokok * 0.1;
+
+              // tunjangan anak, peranak 20%
+              tunjanganAnak = gajiPokok * (0.2 * banyakAnak);  // 20% * banyak anak
+            }
+            return gajiPokok + tunjanganNikah + tunjanganAnak ;
+          }
+
+          function hitungGajiBersih(golongan, statusMenikah, banyakAnak) {
+            let gajiKotor = hitungGajiKotor(golongan, statusMenikah, banyakAnak);
+            let gapok = dataGajiPokok[golongan-1];
+            
+            // mengurangi gaji dengan ppn
+            let gajiBersih = gajiKotor - hitungPPN(gapok);
+            return gajiBersih;
+          }
+
+          // input gologan
+          let golongan = parseInt(prompt("Masukkan golongan"));
+          if (golongan > 3 || golongan < 1) { // ketika inputan golongan tidak sesuai
+            alert("Golongan tidak valid, silahkan ulangi")
+
+            // refresh page
+            window.location.reload();
+          }
+
+          // input status menikah
+          statusMenikah = confirm("apakah anda sudah menikah?");
+
+          if (statusMenikah) {
+            banyakAnak = parseInt(prompt("Masukkan jumlah anak"));
+          }
+
+          // konversi int ke idr
+          let IDR = new Intl.NumberFormat('id-id', {
+            style: 'currency',
+            currency: 'IDR',
+          });
+          
+          let currentGapok = dataGajiPokok[golongan-1];
+          let gajiBersih = hitungGajiBersih(golongan, statusMenikah, banyakAnak);
+          
+          alert(`gaji Bersih anda adalah: ${IDR.format(gajiBersih)}`);
+          document.write(`
+          Gologan        : ${golongan} <br>
+          Gaji Pokok     : ${IDR.format(currentGapok)} <br>
+          Status Menikah : ${statusMenikah} <br>
+          Tunjangan Nikah: ${IDR.format(hitungTunjanganNikah(currentGapok))} <br>
+          Banyak Anak    : ${banyakAnak} <br>
+          Tunjangan Anak : ${IDR.format(hitungTunjanganAnak(currentGapok, banyakAnak))} <br>
+          Gaji Kotor     : ${IDR.format(hitungGajiKotor(golongan, statusMenikah, banyakAnak))} <br>
+          PPN            : ${dataGajiPokok[golongan-1] < 5000000 ? "5%" : "10%"} <br>
+          Gaji bersih    : ${IDR.format(gajiBersih)}
+          `);
+    </script>
+    <br>
+    <button onclick="window.location.reload()">Again</button>
+  </body>
+</html>

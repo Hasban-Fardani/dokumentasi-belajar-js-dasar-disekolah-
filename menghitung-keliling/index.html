@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menghitung Keliling</title>
+</head>
+<body>
+  <script>
+
+    function hitungKelilingPersegi(sisi) {
+      return 4*sisi;
+    }
+
+    function hitungKelilingPersegiPanjang(panjang, lebar) {
+      return 2*(panjang+lebar)
+    }
+
+    let sisi1 = parseInt(prompt("masukkan panjang sisi"))
+    let sisi2 = parseInt(prompt("masukkan panjang sisi"))
+    if (sisi1 === sisi2) {
+      document.write("<h2>Keliling Persegi: ")
+      document.write(hitungKelilingPersegi(sisi1))
+      document.write("</h2>")
+    } else {
+      document.write("<h2>Keliling Persegi Panjang: ")
+      document.write(hitungKelilingPersegiPanjang(sisi1, sisi2))
+      document.write("</h2>")
+    }
+  </script>
+</body>
+</html>
